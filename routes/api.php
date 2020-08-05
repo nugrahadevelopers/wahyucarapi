@@ -22,6 +22,7 @@ Route::post('login', 'Api\AuthController@login');
 Route::post('register', 'Api\AuthController@register');
 Route::get('logout', 'Api\AuthController@logout');
 Route::post('save-user-info', 'Api\AuthController@SaveUserInfo')->middleware('jwtAuth');
+Route::post('edit-profil', 'Api\AuthController@editProfil')->middleware('jwtAuth');
 
 Route::post('mobil/create', 'Api\MobilController@create')->middleware('jwtAuth');
 Route::post('mobil/delete', 'Api\MobilController@delete')->middleware('jwtAuth');

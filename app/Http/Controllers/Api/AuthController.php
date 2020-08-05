@@ -89,4 +89,31 @@ class AuthController extends Controller
             'photo' => $photo
         ]);
     }
+
+    public function editProfil(Request $request)
+    {
+        $encryptedPass = Hash::make($request->password);
+
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->noktp = $request->noktp;
+        $user->password = $encryptedPass;
+
+        $photo = '';
+
+        if ($request->photo != '') {
+            $photo = time() . '.jpg';
+            file_put_contents('storage/profiles/' . $photo, base64_decode($request->photo));
+            $user->photo = $photo;
+        }
+
+        $user->update();
+
+        return response()->json([
+            'success' => true,
+            'user' => Auth::user()
+        ]);
+    }
 }
